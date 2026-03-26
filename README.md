@@ -1,5 +1,7 @@
 # eei - Ersti Einführungs Interface
 
+:warning: Please submit any pull requests or issues in english only! Please stick to english for discussions and conversations. :warning:
+
 ## Setup Instructions
 
 1. Download and install php: https://www.php.net/manual/install.php
@@ -40,7 +42,10 @@ To update the term, you need to modify the file `config.php` where the term info
 ...
 $CONFIG_TERM = 'Sommersemester 2025'; # example: Wintersemester 2020/21
 $CONFIG_TERM_SHORT = 'SS25'; # example: WS20_21
+$CONFIG_THEME = 'fsi-only'; # possible values: 'fsi-fsk' or 'fsi-only'
 ```
+
+`$CONFIG_THEME` switches between a blue theme (fsi) and a teal theme (fsi + fsk).
 
 ## Adding/Updating an event
 
@@ -106,6 +111,19 @@ SP1:
   # Location where the event will take place. Can be a specific address or a general area description.
   location: "Sand 14, A301"
 
+  # Optional map links for the location
+  # Not required!
+  # Allows users to get directions to the event location via different map providers.
+  # Only "google" and "osm" keys are allowed.
+  location_maps:
+    google: "https://www.google.com/maps/search/?api=1&query=Sand+14+T%C3%BCbingen"
+    osm: "https://www.openstreetmap.org/search?query=Sand%2014%2C%20T%C3%BCbingen"
+
+  # Boolean value indicating if the event offers a registration.
+  # Not required, default value is true
+  # Set this to false for pure informational entries like a Clubhausfest
+  registration_enabled: true
+
   # Maximum number of participants that can attend the event.
   max_participants: 120
 
@@ -136,7 +154,7 @@ SP1:
     end: "12.04.2024 19:00"
 
   # Additional information required for the event registration
-  # Not required! Below are the default values.
+  # Isn't required! Below are the default values.
   form:
     # Ask for breakfast preferences
     # By default, this is set to false
@@ -144,9 +162,15 @@ SP1:
     # Ask for food preferences
     # By default, this is set to false
     food: false
+    # Ask for gender
+    # By default, this is set to false
+    gender: false    
     # Ask for course information
     # By default, this is set to true
     course_required: true
+    # Ask if the participant drinks alcohol
+    # This is set to false by default
+    no_alcohol: false
 
     # Path to the CSV file associated with the event. Include the file extension.
     csv_path: "ersti-kneipentour1.csv"
@@ -186,3 +210,7 @@ The variable `$mail_handles` is imported as global in `event_type.php` if the fi
 
 ### Requesting the participants csv
 Go to https://eei.fsi.uni-tuebingen.de/participants.php
+
+### Integrity check
+At each pull request, the integrity of the `events.yml` file is checked using a Github Action.
+If the file is not valid, the pull request will be rejected. Additionally, the language files are checked for missing and duplicate keys.

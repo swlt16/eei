@@ -4,21 +4,17 @@
 }
 
 :root {
-    --background-color: #000080;
+    /* background-color and primary-color are defined in special theme files now */
     --background-color-light: #ffffff;
 
-    --primary-color: #000080;
-    --primary-color-rgb: 0, 0, 128;
-
     --success-color: #008000;
-    --success-color-rgb: 0, 128, 0;
     --success-color-light: #cce5cc;
 
     --text-color: #ffffff;
     --text-color-light: #ffffff;
     --text-hover-color: #dddddd;
     --text-inactive-color: #aaaaaa;
-    --text-on-light-bg: #000080;
+    --text-on-light-bg: var(--primary-color);
 
     --box-color: #ffffff !important;
     --box-hover-color: #f0f0f0;
@@ -163,6 +159,12 @@ a .link:hover {
     padding-right: 15px;
 }
 
+.event-pill-multiline {
+    font-size: 60%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
 .event-name {
     margin-right: 15px;
     overflow: hidden;
@@ -177,7 +179,6 @@ a .link:hover {
     background-repeat: no-repeat;
     background-position: center;
     flex-shrink: 0;
-    filter: invert(10%) sepia(74%) saturate(4575%) hue-rotate(235deg) brightness(85%) contrast(142%);
 }
 
 
@@ -461,6 +462,7 @@ form .text-block {
 }
 
 
+
 .language-switcher {
 
     margin: 20px auto;
@@ -503,5 +505,32 @@ form .text-block {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: var(--box-shadow);
+}
+
+.map-links {
+    display: inline-flex;
+    gap: 8px;
+    margin-left: 10px;
+    align-items: center;
+}
+
+.map-link {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    transition: var(--transition);
+}
+
+.map-link:hover {
+    transform: scale(1.15);
+}
+
+.map-link .icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 

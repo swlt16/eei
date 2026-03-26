@@ -20,6 +20,9 @@ class ICSGenerator
     {
         $eventBlocks = array();
         foreach($this->events as $event) {
+            if ($event->cancelled) {
+                continue;
+            }
             $eventBlocks[] = $this->generateEventBlock($event);
         }
         return implode(self::LINE_ENDING, [
@@ -74,15 +77,11 @@ class ICSGenerator
 		
 		$eventData[] = 'SUMMARY:' . $this->escapeString($event->name);
 
-        if (!empty($this->event->description)) {
-            $eventData[] = 'DESCRIPTION:' . $this->escapeString($event->text);
-        }
-
-        if (!empty($this->event->location)) {
+        if ( ! empty($event->location)) {
             $eventData[] = 'LOCATION:' . $this->escapeString($event->location);
         }
 
-        if (!empty($this->event->link)) {
+        if ( ! empty($event->link)) {
             $eventData[] = 'URL:' . $this->escapeString(getRemoteAddr() . '/event.php?e=' . $event->link);
         }
 
@@ -125,8 +124,9 @@ class ICSGenerator
             $filename = $this->sanitizeFilename($this->events[0]->name) . '.ics';
         }
         
-		// To debug the Calendar, comment all the "header" lines
-        header('Content-Type: ' . self::MIME_TYPE);
+	// To debug the Calendar, comment all the "header" lines
+	header('Access-Control-Allow-Origin: *');
+	header('Content-Type: ' . self::MIME_TYPE);
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Cache-Control: no-cache, must-revalidate');
         header('Expires: 0');
